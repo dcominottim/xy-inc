@@ -1,0 +1,18 @@
+version: "3"
+services:
+  xy-poi-postgres:
+    image: library/postgres:13.1
+    container_name: "xy_poi-postgres"
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: xy_poi
+  xy-poi-app:
+    image: xy_poi_app:0.0.1-SNAPSHOT
+    container_name: "xy_poi-app"
+    ports:
+      - 8080:8080
+    depends_on:
+      - xy-poi-postgres

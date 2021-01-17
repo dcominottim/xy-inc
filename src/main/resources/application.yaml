@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    username: postgres
+    password: password
+    initialization-mode: never
+    url: jdbc:postgresql://localhost:5432/xy_poi
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+---
+spring:
+  profiles:
+    active: testing
+  datasource:
+    initialization-mode: always
+    url: jdbc:tc:postgresql:///xy_poi?user=postgres&password=password
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+---
+spring:
+  profiles:
+    active: development
+  datasource:
+    initialization-mode: always
+    url: jdbc:postgresql://localhost:5432/xy_poi
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+

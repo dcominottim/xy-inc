@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Point of Interest",
+  "description": "A point of interest (POI)",
+  "type": "object",
+  "required": ["id", "name", "local"],
+  "properties": {
+    "id": {
+      "description": "The unique identifier of a POI",
+      "type": "string"
+    },
+    "name": {
+      "description": "The encapsulated name of a POI",
+      "type": "object",
+      "required": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "local": {
+      "description": "The coordinates of a POI in terms of geographic points X and Y",
+      "type": "object",
+      "required": [
+        "x",
+        "y"
+      ],
+      "properties": {
+        "x": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "y": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    }
+  }
+}
