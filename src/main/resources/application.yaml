@@ -8,24 +8,26 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: validate
+
 ---
 spring:
-  profiles:
-    active: testing
+  config:
+    activate:
+      on-profile: testing
   datasource:
     initialization-mode: always
-    url: jdbc:tc:postgresql:///xy_poi?user=postgres&password=password
-  jpa:
-    hibernate:
-      ddl-auto: create-drop
+    url: jdbc:tc:postgresql:///test
+
 ---
 spring:
-  profiles:
-    active: development
+  config:
+    activate:
+      on-profile: development
   datasource:
     initialization-mode: always
-    url: jdbc:postgresql://localhost:5432/xy_poi
-  jpa:
-    hibernate:
-      ddl-auto: create-drop
+
+
+
+
+
 

@@ -5,8 +5,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.testcontainers.junit.jupiter.Testcontainers
 
 @SpringBootTest
-@Testcontainers
-class PointOfInterestApplicationTests: IntegrationTestConfig() {
+internal class PointOfInterestIntegrationTests: IntegrationTestConfig() {
 
     @Test
     fun contextLoads() {

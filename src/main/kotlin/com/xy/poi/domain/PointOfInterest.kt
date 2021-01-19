@@ -1,5 +1,6 @@
 package com.xy.poi.domain
 
+import com.xy.poi.validation.BeanValidator
 import java.util.UUID
 import javax.persistence.*
 import javax.validation.Valid
@@ -29,6 +30,11 @@ class PointOfInterest(
     @Valid
     var location: Location = location
         protected set
+
+    init {
+        BeanValidator.validate(this)
+    }
+
 
     object Table {
         const val NAME = "point_of_interest"
