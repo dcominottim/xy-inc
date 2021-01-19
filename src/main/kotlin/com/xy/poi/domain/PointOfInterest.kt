@@ -1,7 +1,7 @@
 package com.xy.poi.domain
 
 import com.xy.poi.validation.BeanValidator
-import java.util.UUID
+import java.util.*
 import javax.persistence.*
 import javax.validation.Valid
 

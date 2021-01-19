@@ -16,7 +16,7 @@ spring:
       on-profile: testing
   datasource:
     initialization-mode: always
-    url: jdbc:tc:postgresql:///test
+    url: jdbc:tc:postgresql:13.1:///test
 
 ---
 spring:

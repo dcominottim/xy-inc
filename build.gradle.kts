@@ -96,6 +96,7 @@ tasks.withType<Test> {
 contracts {
     baseClassForTests.value("com.xy.poi.ContractTestConfig")
     testFramework.value(org.springframework.cloud.contract.verifier.config.TestFramework.JUNIT5)
+    failOnNoContracts.value(false)
 }
 
 tasks.getByName<BootBuildImage>("bootBuildImage") {

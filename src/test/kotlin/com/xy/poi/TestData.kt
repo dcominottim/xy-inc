@@ -1,6 +1,5 @@
 package com.xy.poi
 
-import com.xy.poi.domain.PointOfInterestName
 import java.util.*
 
 class TestData {
