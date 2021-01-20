@@ -67,7 +67,6 @@ dependencyManagement {
     }
 }
 
-
 sourceSets {
     getByName("contractTest").java.srcDirs("${project.buildDir}/generated-test-sources/contractTest")
 }

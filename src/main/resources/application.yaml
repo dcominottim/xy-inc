@@ -2,8 +2,9 @@ spring:
   datasource:
     username: postgres
     password: password
+    name: xy_poi
     initialization-mode: never
-    url: jdbc:postgresql://localhost:5432/xy_poi
+    url: jdbc:postgresql://localhost:5432/
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
@@ -15,8 +16,11 @@ spring:
     activate:
       on-profile: testing
   datasource:
+    username: test
+    password: test
+    name: test
     initialization-mode: always
-    url: jdbc:tc:postgresql:13.1:///test
+    url: jdbc:tc:postgresql://localhost:5433/
 
 ---
 spring:

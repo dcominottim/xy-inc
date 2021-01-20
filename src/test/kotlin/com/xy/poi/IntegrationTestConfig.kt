@@ -1,18 +1,18 @@
 package com.xy.poi
 
 import com.xy.poi.config.SpringProfiles
-import org.springframework.boot.web.client.RestTemplateCustomizer
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
-import org.springframework.hateoas.config.HypermediaRestTemplateConfigurer
+import com.xy.poi.config.TestBeanConfig
+import org.springframework.context.annotation.Import
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.web.client.RestTemplate
+import org.testcontainers.containers.PostgreSQLContainer
+import org.testcontainers.junit.jupiter.Testcontainers
+import org.testcontainers.utility.DockerImageName
 
 @ActiveProfiles(value = [SpringProfiles.TESTING])
+@Testcontainers
+@Import(value = [TestBeanConfig::class])
 open class IntegrationTestConfig {
 
-    @Bean
-    fun hypermediaRestTemplate(configurer: HypermediaRestTemplateConfigurer): RestTemplateCustomizer {
-        return RestTemplateCustomizer { restTemplate -> configurer.registerHypermediaTypes(restTemplate)}
-    }
+    // workaround to deal with Testcontainers SELF type if more complex config is needed
+    class KPostgresContainer(imageName: DockerImageName) : PostgreSQLContainer<KPostgresContainer>(imageName)
 }

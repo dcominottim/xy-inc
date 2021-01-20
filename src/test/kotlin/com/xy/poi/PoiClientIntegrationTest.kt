@@ -11,26 +11,22 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.boot.web.server.LocalServerPort
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
+import org.springframework.core.ParameterizedTypeReference
 import org.springframework.hateoas.EntityModel
 import org.springframework.hateoas.MediaTypes
 import org.springframework.hateoas.PagedModel
 import org.springframework.hateoas.client.Traverson
 import org.springframework.hateoas.client.Traverson.TraversalBuilder
 import org.springframework.hateoas.server.core.TypeReferences.PagedModelType
-import org.springframework.test.web.reactive.server.WebTestClient
-import java.net.URI
-import org.springframework.web.client.RestTemplate
-
-import org.springframework.hateoas.config.HypermediaRestTemplateConfigurer
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod
-import org.springframework.http.MediaType
-import org.springframework.http.RequestEntity
-
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.test.annotation.DirtiesContext
+import org.springframework.web.util.UriComponentsBuilder
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class PoiClientIntegrationTest(
     @LocalServerPort
     val port: Int,
@@ -40,14 +36,20 @@ class PoiClientIntegrationTest(
 
     val restTemplate = restTemplateBuilder.build()
 
-    companion object {
-        const val SERVICE_URI = "http://localhost:%s/"
+
+    private fun baseUriBuilder(): UriComponentsBuilder {
+        return UriComponentsBuilder.newInstance()
+            .scheme("http")
+            .host("localhost")
+            .port(port)
     }
 
     @Test
-    fun postPointOfterest() {
-        restTemplate.exchange(
-            URI.create(java.lang.String.format(SERVICE_URI, port)),
+    fun postPointOfInterest() {
+        val result: ResponseEntity<EntityModel<PointOfInterest>> = restTemplate.exchange(
+            baseUriBuilder()
+                .path(PointOfInterest.Rest.COLLECTION)
+                .build().toUri(),
             HttpMethod.POST,
             HttpEntity(
                 PointOfInterest(
@@ -58,13 +60,33 @@ class PoiClientIntegrationTest(
                     )
                 )
             ),
-            EntityModel::java.class
+            object: ParameterizedTypeReference<EntityModel<PointOfInterest>>() {}
+        )
+
+        Assertions.assertEquals(HttpStatus.CREATED, result.statusCode)
+    }
+
+    @Test
+    fun getPointsOfInterest() {
+        val traverson = Traverson(baseUriBuilder().build().toUri(), MediaTypes.HAL_JSON)
+
+        val builder: TraversalBuilder =
+            traverson.follow(
+                PointOfInterest.Rest.COLLECTION
+            )
+
+        val resources: PagedModel<EntityModel<PointOfInterest>>? =
+            builder.toObject(object : PagedModelType<EntityModel<PointOfInterest>>() {})
+
+        Assertions.assertEquals(
+            7L,
+            resources!!.metadata!!.totalElements
         )
     }
 
     @Test
     fun discoverPointsOfInterestSearch() {
-        val traverson = Traverson(URI.create(java.lang.String.format(SERVICE_URI, port)), MediaTypes.HAL_JSON)
+        val traverson = Traverson(baseUriBuilder().build().toUri(), MediaTypes.HAL_JSON)
 
         val builder: TraversalBuilder =
             traverson.follow(
