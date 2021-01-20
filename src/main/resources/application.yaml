@@ -4,7 +4,7 @@ spring:
     password: password
     name: xy_poi
     initialization-mode: never
-    url: jdbc:postgresql://localhost:5432/
+    url: "jdbc:postgresql://${XY_POI_DB_HOSTNAME:localhost}:5432/"
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
@@ -20,7 +20,7 @@ spring:
     password: test
     name: test
     initialization-mode: always
-    url: jdbc:tc:postgresql://localhost:5433/
+    url: jdbc:tc:postgresql:13.1://localhost:5433/
 
 ---
 spring:

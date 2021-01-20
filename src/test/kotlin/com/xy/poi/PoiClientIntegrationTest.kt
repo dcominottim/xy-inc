@@ -1,5 +1,6 @@
 package com.xy.poi
 
+import com.xy.poi.config.WebTestBeanConfig
 import com.xy.poi.domain.GeoPoint
 import com.xy.poi.domain.Location
 import com.xy.poi.domain.PointOfInterest
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.boot.web.server.LocalServerPort
+import org.springframework.context.annotation.Import
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.hateoas.EntityModel
 import org.springframework.hateoas.MediaTypes
@@ -27,6 +29,7 @@ import org.springframework.web.util.UriComponentsBuilder
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@Import(value = [WebTestBeanConfig::class])
 class PoiClientIntegrationTest(
     @LocalServerPort
     val port: Int,

@@ -1,18 +1,22 @@
 version: "3"
+
 services:
-  xy-poi-postgres:
+  xy_poi_postgres:
     image: library/postgres:13.1
-    container_name: "xy_poi-postgres"
+    container_name: "xy_poi_postgres"
     ports:
       - 5432:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: xy_poi
-  xy-poi-app:
+  xy_poi_app:
     image: xy_poi_app:0.0.1-SNAPSHOT
-    container_name: "xy_poi-app"
+    container_name: "xy_poi_app"
     ports:
       - 8080:8080
+    environment:
+      - "SPRING_PROFILES_ACTIVE=development"
+      - "XY_POI_DB_HOSTNAME=xy_poi_postgres"
     depends_on:
-      - xy-poi-postgres
+      - xy_poi_postgres

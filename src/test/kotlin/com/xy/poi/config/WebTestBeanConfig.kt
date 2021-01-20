@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.hateoas.config.HypermediaRestTemplateConfigurer
 
 @TestConfiguration
-class TestBeanConfig {
+class WebTestBeanConfig {
 
     @Bean
     fun hypermediaRestTemplate(configurer: HypermediaRestTemplateConfigurer): RestTemplateCustomizer {
