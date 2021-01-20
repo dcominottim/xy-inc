@@ -83,7 +83,7 @@ Aceita os verbos HTTP `GET` e `POST`, dentre outros. Um exemplo do formato do re
 
 ### `/pointsOfInterest/search/findByProximity?referenceX={inteiro}&referenceY={inteiro}&distanceInMeters={inteiro}`
 
-Além dos serviços `GET` e `POST` com semântica REST padrão, a aplicação fornece o serviço de busca por proximidade conforme a especificação dada. Os seguintes query parameter são obrigatórios:
+Além dos serviços `GET` e `POST` com semântica REST padrão, a aplicação fornece o serviço de busca por proximidade conforme a especificação dada. Os seguintes query parameters são obrigatórios:
 
 - `referenceX`: ponto X de referência; inteiro >= 0
 - `referenceY`: ponto Y de referência; inteiro >= 0
