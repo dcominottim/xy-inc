@@ -1,23 +1,14 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
-buildscript {
-    val springCloudContractVersion: String by extra
-
-    dependencies {
-        classpath("org.springframework.cloud:spring-cloud-contract-gradle-plugin:${springCloudContractVersion}")
-        classpath("org.springframework.cloud:spring-cloud-contract-spec-kotlin:${springCloudContractVersion}")
-    }
-}
-
 plugins {
-    id("org.springframework.boot") version "2.4.1"
+    id("org.springframework.boot") version "2.4.5"
     id("io.spring.dependency-management") version "1.0.10.RELEASE"
     // the version comes from settings.gradle.kts due to limitation in the Spring Cloud Contract Kotlin DSL plugin
     id("org.springframework.cloud.contract")
-    kotlin("jvm") version "1.4.21"
-    kotlin("plugin.spring") version "1.4.21"
-    kotlin("plugin.jpa") version "1.4.21"
+    kotlin("jvm") version "1.5.0"
+    kotlin("plugin.spring") version "1.5.0"
+    kotlin("plugin.jpa") version "1.5.0"
 }
 
 group = "com.xy"
@@ -30,12 +21,12 @@ repositories {
     maven { url = uri("https://repo.spring.io/snapshot") }
 }
 
-extra["springCloudVersion"] = "2020.0.0"
-extra["testcontainersVersion"] = "1.15.1"
+extra["springCloudVersion"] = "2020.0.2"
+extra["testcontainersVersion"] = "1.15.3"
 // this is needed because of a bugfix that has just landed after a comment I made in a Spring bug report about
 // classes with a single-arg constructor and how Spring REST/HATEOAS handle them.
 // for reference, see https://github.com/spring-projects/spring-data-rest/issues/1926
-extra["springDataVersion"] = "2020.0.4-SNAPSHOT"
+extra["springDataVersion"] = "2021.0.0"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
@@ -57,6 +48,7 @@ dependencies {
     contractTestImplementation("org.springframework.cloud:spring-cloud-starter-contract-stub-runner")
     contractTestImplementation("org.springframework.cloud:spring-cloud-starter-contract-verifier")
     contractTestImplementation("org.springframework.cloud:spring-cloud-contract-spec-kotlin")
+    contractTestImplementation("org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:1.5.0")
 }
 
 dependencyManagement {
